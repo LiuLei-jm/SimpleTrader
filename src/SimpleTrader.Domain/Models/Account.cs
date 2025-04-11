@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SimpleTrader.Domain.Models
 {
-    public class Account
+    public class Account : DomainObject
     {
-        public int Id { get; set; }
         public User AccountHolder { get; set; }
         public double Balance { get; set; }
         public ICollection<AssertTransaction> AssertTransactions { get; set; }

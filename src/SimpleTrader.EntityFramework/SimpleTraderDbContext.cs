@@ -11,18 +11,18 @@ namespace SimpleTrader.EntityFramework
 {
     public class SimpleTraderDbContext : DbContext
     {
+        public SimpleTraderDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected SimpleTraderDbContext()
+        {
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AssertTransaction> AssertTransactions { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=SimpleTrader;Trusted_Connection=True"
-            );
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
