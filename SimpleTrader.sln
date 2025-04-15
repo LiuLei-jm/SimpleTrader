@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrader.Domain", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrader.EntityFramework", "src\SimpleTrader.EntityFramework\SimpleTrader.EntityFramework.csproj", "{21DF9FE0-A187-473D-8685-253A4604EE8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrader.WPF", "src\SimpleTrader.WPF\SimpleTrader.WPF.csproj", "{2EB2BB28-939B-4D44-8C1B-964CFB654E87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,18 @@ Global
 		{21DF9FE0-A187-473D-8685-253A4604EE8C}.Release|x64.Build.0 = Release|Any CPU
 		{21DF9FE0-A187-473D-8685-253A4604EE8C}.Release|x86.ActiveCfg = Release|Any CPU
 		{21DF9FE0-A187-473D-8685-253A4604EE8C}.Release|x86.Build.0 = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|x64.Build.0 = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Debug|x86.Build.0 = Debug|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|x64.ActiveCfg = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|x64.Build.0 = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|x86.ActiveCfg = Release|Any CPU
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,5 +64,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1A2238A7-B758-40F5-8EC4-5B8E428BDA37} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{21DF9FE0-A187-473D-8685-253A4604EE8C} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{2EB2BB28-939B-4D44-8C1B-964CFB654E87} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BFE9493-8E33-4157-9B40-A771D0589E15}
 	EndGlobalSection
 EndGlobal
