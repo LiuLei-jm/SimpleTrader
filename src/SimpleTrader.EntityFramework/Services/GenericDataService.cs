@@ -45,11 +45,11 @@ namespace SimpleTrader.EntityFramework.Services
             }
         }
 
-        public async Task<T> Get(int id)
+        public async Task<T?> Get(int id)
         {
             using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync(entity => entity.Id == id);
+                var entity = await context.Set<T>().FirstOrDefaultAsync(entity => entity.Id == id);
                 if (entity == null)
                 {
                     return null;
@@ -67,7 +67,7 @@ namespace SimpleTrader.EntityFramework.Services
             }
         }
 
-        public async Task<T> Update(int id, T entity)
+        public async Task<T?> Update(int id, T entity)
         {
             using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
             {
