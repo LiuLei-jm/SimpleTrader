@@ -1,4 +1,5 @@
-﻿using SimpleTrader.WPF.State.Navigators;
+﻿using SimpleTrader.FinancialModelingPrepAPI.Services;
+using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,13 +27,13 @@ namespace SimpleTrader.WPF.Commands
 
         public void Execute(object? parameter)
         {
-            if(parameter is ViewType)
+            if (parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
                 switch (viewType)
                 {
                     case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel();
+                        _navigator.CurrentViewModel = new HomeViewModel(StockIndexViewModel.LoadMajorIndexViewModel(new StockIndexService()));
                         break;
                     case ViewType.Portfolio:
                         _navigator.CurrentViewModel = new PortfolioViewModel();

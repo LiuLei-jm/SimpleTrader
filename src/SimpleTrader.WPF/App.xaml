@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SimpleTrader.WPF"
              xmlns:viewmodels="clr-namespace:SimpleTrader.WPF.ViewModels"
-             xmlns:views="clr-namespace:SimpleTrader.WPF.Views"
-             >
+             xmlns:views="clr-namespace:SimpleTrader.WPF.Views">
     <Application.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Common.xaml" />
+                <ResourceDictionary Source="Styles/NavigationBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">

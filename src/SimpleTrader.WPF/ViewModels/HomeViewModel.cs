@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace SimpleTrader.WPF.ViewModels
 {
- public   class HomeViewModel : ViewModelBase
+    public class HomeViewModel : ViewModelBase
     {
+        public StockIndexViewModel StockIndexViewModel { get; set; }
+
+        public HomeViewModel(StockIndexViewModel stockIndexViewModel)
+        {
+            StockIndexViewModel = stockIndexViewModel;
+        }
     }
 }
