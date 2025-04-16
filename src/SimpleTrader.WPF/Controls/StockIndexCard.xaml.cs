@@ -3,11 +3,11 @@
 namespace SimpleTrader.WPF.Controls
 {
     /// <summary>
-    /// NavigationBar.xaml 的交互逻辑
+    /// StockIndexCard.xaml 的交互逻辑
     /// </summary>
-    public partial class NavigationBar : UserControl
+    public partial class StockIndexCard : UserControl
     {
-        public NavigationBar()
+        public StockIndexCard()
         {
             InitializeComponent();
         }

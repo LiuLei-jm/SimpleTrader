@@ -1,32 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SimpleTrader.Domain.Models;
+﻿using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
 
 namespace SimpleTrader.WPF.ViewModels
 {
-    public class StockIndexViewModel
+    public class StockIndexListingViewModel : ViewModelBase
     {
         private readonly IStockIndexService _stockIndexService;
 
-        public StockIndexViewModel(IStockIndexService stockIndexService)
+        public StockIndexListingViewModel(IStockIndexService stockIndexService)
         {
             _stockIndexService = stockIndexService;
         }
 
-        public StockIndex DJI { get; set; }
-        public StockIndex IXIC { get; set; }
-        public StockIndex GSPC { get; set; }
+        private StockIndex _dji;
+        public StockIndex DJI
+        {
+            get { return _dji; }
+            set
+            {
+                _dji = value;
+                OnPropertyChanged(nameof(DJI));
+            }
+        }
+        private StockIndex _ixic;
+        public StockIndex IXIC
+        {
+            get { return _ixic; }
+            set
+            {
+                _ixic = value;
+                OnPropertyChanged(nameof(IXIC));
+            }
+        }
+        private StockIndex _gspc;
+        public StockIndex GSPC
+        {
+            get { return _gspc; }
+            set
+            {
+                _gspc = value;
+                OnPropertyChanged(nameof(GSPC));
+            }
+        }
 
-        public static StockIndexViewModel LoadMajorIndexViewModel(
+        public static StockIndexListingViewModel LoadMajorIndexViewModel(
             IStockIndexService stockIndexService
         )
         {
-            var stockIndexViewModel = new StockIndexViewModel(stockIndexService);
-            //stockIndexViewModel.LoadStockIndexes();
+            var stockIndexViewModel = new StockIndexListingViewModel(stockIndexService);
+            stockIndexViewModel.LoadStockIndexes();
             return stockIndexViewModel;
         }
 

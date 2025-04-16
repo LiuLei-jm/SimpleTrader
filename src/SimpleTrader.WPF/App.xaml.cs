@@ -1,9 +1,5 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using SimpleTrader.WPF.ViewModels;
 using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using SimpleTrader.FinancialModelingPrepAPI.Services;
-using SimpleTrader.WPF.ViewModels;
 
 namespace SimpleTrader.WPF
 {

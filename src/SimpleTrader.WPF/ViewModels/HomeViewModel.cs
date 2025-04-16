@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleTrader.WPF.ViewModels
+﻿namespace SimpleTrader.WPF.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        public StockIndexViewModel StockIndexViewModel { get; set; }
+        public StockIndexListingViewModel StockIndexListingViewModel { get; set; }
 
-        public HomeViewModel(StockIndexViewModel stockIndexViewModel)
+        public HomeViewModel(StockIndexListingViewModel stockIndexListingViewModel)
         {
-            StockIndexViewModel = stockIndexViewModel;
+            StockIndexListingViewModel = stockIndexListingViewModel;
         }
     }
 }

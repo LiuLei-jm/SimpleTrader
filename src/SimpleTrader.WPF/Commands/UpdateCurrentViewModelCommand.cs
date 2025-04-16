@@ -1,11 +1,6 @@
 ﻿using SimpleTrader.FinancialModelingPrepAPI.Services;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SimpleTrader.WPF.Commands
@@ -33,7 +28,7 @@ namespace SimpleTrader.WPF.Commands
                 switch (viewType)
                 {
                     case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel(StockIndexViewModel.LoadMajorIndexViewModel(new StockIndexService()));
+                        _navigator.CurrentViewModel = new HomeViewModel(StockIndexListingViewModel.LoadMajorIndexViewModel(new StockIndexService()));
                         break;
                     case ViewType.Portfolio:
                         _navigator.CurrentViewModel = new PortfolioViewModel();
