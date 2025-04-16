@@ -20,7 +20,7 @@ namespace SimpleTrader.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Stock);
+            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Asset);
             base.OnModelCreating(modelBuilder);
         }
     }

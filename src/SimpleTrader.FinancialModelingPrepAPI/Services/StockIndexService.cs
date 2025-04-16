@@ -6,22 +6,18 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class StockIndexService : IStockIndexService
     {
-        public async Task<StockIndex> GetStockIndex(string symbol)
+        public async Task<StockIndex?> GetStockIndex(string symbol)
         {
-            using (HttpClient client = new HttpClient())
+            using (FinancialModelingPrepAPI client = new FinancialModelingPrepAPI())
             {
-                string url =
-                    $"https://financialmodelingprep.com/stable/quote-short/?symbol=^{symbol}&apikey=LumwlleWnJLhYWnPIdB8Bf6pZZqd3sJO";
+                string uri =
+                    $"quote-short/?symbol=^{symbol}&apikey=LumwlleWnJLhYWnPIdB8Bf6pZZqd3sJO";
 
-                HttpResponseMessage response = await client.GetAsync(url);
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                var indexShortQuote = JsonConvert.DeserializeObject<List<StockIndex>>(
-                    jsonResponse
-                );
-                var shortQuote = indexShortQuote.FirstOrDefault();
+                var stockIndexResult = await client.GetAsync<List<StockIndex>>(uri);
+
+                var shortQuote = stockIndexResult.FirstOrDefault();
                 return shortQuote;
             }
-            return null;
         }
     }
 }
