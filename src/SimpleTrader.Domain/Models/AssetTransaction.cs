@@ -1,6 +1,6 @@
 ﻿namespace SimpleTrader.Domain.Models
 {
-    public class AssertTransaction : DomainObject
+    public class AssetTransaction : DomainObject
     {
         public Account Account { get; set; }
         public bool IsPurchase { get; set; }

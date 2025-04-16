@@ -15,12 +15,12 @@ namespace SimpleTrader.EntityFramework
 
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<AssertTransaction> AssertTransactions { get; set; }
+        public DbSet<AssetTransaction> AssertTransactions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Asset);
+            modelBuilder.Entity<AssetTransaction>().OwnsOne(a => a.Asset);
             base.OnModelCreating(modelBuilder);
         }
     }

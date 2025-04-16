@@ -4,6 +4,6 @@
     {
         public User AccountHolder { get; set; }
         public double Balance { get; set; }
-        public ICollection<AssertTransaction> AssertTransactions { get; set; }
+        public ICollection<AssetTransaction> AssetTransactions { get; set; }
     }
 }

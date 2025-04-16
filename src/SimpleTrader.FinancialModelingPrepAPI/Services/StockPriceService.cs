@@ -17,7 +17,7 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
             using (FinancialModelingPrepAPI client = new FinancialModelingPrepAPI())
             {
                 string url =
-                    $"aftermarket-trade/?symbol=^{symbol}&apikey=LumwlleWnJLhYWnPIdB8Bf6pZZqd3sJO";
+                    $"aftermarket-trade/?symbol={symbol}&apikey=LumwlleWnJLhYWnPIdB8Bf6pZZqd3sJO";
 
                 var stockPriceResult = await client.GetAsync<List<StockPriceResult>>(url);
 

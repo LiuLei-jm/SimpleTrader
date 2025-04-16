@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
+using SimpleTrader.EntityFramework.Services.Common;
 
 namespace SimpleTrader.EntityFramework.Services
 {
@@ -8,36 +9,22 @@ namespace SimpleTrader.EntityFramework.Services
         where T : DomainObject
     {
         private readonly SimpleTraderDbContextFactory _contextFactory;
+        private readonly NonQueryDataService<T> _nonQueryDataService;
 
-        public GenericDataService(SimpleTraderDbContextFactory contextFactory)
+        public GenericDataService(SimpleTraderDbContextFactory contextFactory, NonQueryDataService<T> nonQueryDataService)
         {
             _contextFactory = contextFactory;
+            _nonQueryDataService = nonQueryDataService;
         }
 
         public async Task<T> Create(T entity)
         {
-            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
-            {
-                var createEntity = await context.Set<T>().AddAsync(entity);
-                await context.SaveChangesAsync();
-
-                return createEntity.Entity;
-            }
+            return await _nonQueryDataService.CreateAsync(entity);
         }
 
         public async Task<bool> Delete(int id)
         {
-            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
-            {
-                var entity = await context.Set<T>().FirstOrDefaultAsync(entity => entity.Id == id);
-                if (entity == null)
-                {
-                    return false;
-                }
-                context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync();
-                return true;
-            }
+            return await _nonQueryDataService.DeleteAsync(id);
         }
 
         public async Task<T> Get(int id)
@@ -64,17 +51,7 @@ namespace SimpleTrader.EntityFramework.Services
 
         public async Task<T> Update(int id, T entity)
         {
-            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
-            {
-                var existingEntity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
-                if (existingEntity == null)
-                {
-                    return null;
-                }
-                context.Entry(existingEntity).CurrentValues.SetValues(entity);
-                await context.SaveChangesAsync();
-                return existingEntity;
-            }
+            return await _nonQueryDataService.UpdateAsync(id, entity);
         }
     }
 }
