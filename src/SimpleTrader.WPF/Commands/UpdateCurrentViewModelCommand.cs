@@ -1,7 +1,8 @@
-﻿using SimpleTrader.FinancialModelingPrepAPI.Services;
+﻿using System.Windows.Input;
+using SimpleTrader.FinancialModelingPrepAPI.Services;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
-using System.Windows.Input;
+using SimpleTrader.WPF.ViewModels.Factories;
 
 namespace SimpleTrader.WPF.Commands
 {
@@ -9,10 +10,15 @@ namespace SimpleTrader.WPF.Commands
     {
         public event EventHandler? CanExecuteChanged;
         private INavigator _navigator;
+        private readonly ISimpleTraderViewModelAbstractFactory _viewModelFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator)
+        public UpdateCurrentViewModelCommand(
+            INavigator navigator,
+            ISimpleTraderViewModelAbstractFactory viewModelFactory
+        )
         {
             _navigator = navigator;
+            _viewModelFactory = viewModelFactory;
         }
 
         public bool CanExecute(object? parameter)
@@ -25,17 +31,15 @@ namespace SimpleTrader.WPF.Commands
             if (parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
-                switch (viewType)
-                {
-                    case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel(StockIndexListingViewModel.LoadMajorIndexViewModel(new StockIndexService()));
-                        break;
-                    case ViewType.Portfolio:
-                        _navigator.CurrentViewModel = new PortfolioViewModel();
-                        break;
-                    default:
-                        throw new ArgumentException("Invalid view type");
-                }
+
+                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
+            }
+            else
+            {
+                throw new ArgumentException(
+                    "Parameter is not of type ViewType.",
+                    nameof(parameter)
+                );
             }
         }
     }
