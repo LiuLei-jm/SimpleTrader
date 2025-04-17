@@ -12,9 +12,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <controls:NavigationBar DataContext="{Binding Navigator}" />
-        <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentViewModel}" />
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ContentControl  Content="{Binding Navigator.CurrentViewModel}" />
+        </ScrollViewer>
     </Grid>
 </Window>

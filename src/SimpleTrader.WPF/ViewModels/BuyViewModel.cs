@@ -25,6 +25,19 @@ namespace SimpleTrader.WPF.ViewModels
                 }
             }
         }
+        private string _searchResultSymbol = string.Empty;
+        public string SearchResultSymbol
+        {
+            get { return _searchResultSymbol; }
+            set
+            {
+                if (_searchResultSymbol != value)
+                {
+                    _searchResultSymbol = value;
+                    OnPropertyChanged(nameof(SearchResultSymbol));
+                }
+            }
+        }
         private double _stockPrice;
         public double StockPrice
         {
@@ -35,6 +48,7 @@ namespace SimpleTrader.WPF.ViewModels
                 {
                     _stockPrice = value;
                     OnPropertyChanged(nameof(StockPrice));
+                    OnPropertyChanged(nameof(TotalPrice));
                 }
             }
         }
@@ -60,7 +74,7 @@ namespace SimpleTrader.WPF.ViewModels
         public ICommand SearchSymbolCommand { get; set; }
         public ICommand BuyStockCommand { get; set; }
 
-        public BuyViewModel(IStockPriceService stockPriceService, IBuyStockService buyStockService )
+        public BuyViewModel(IStockPriceService stockPriceService, IBuyStockService buyStockService)
         {
             SearchSymbolCommand = new SearchSymbolCommand(this, stockPriceService);
             BuyStockCommand = new BuyStockCommand(this, buyStockService);
