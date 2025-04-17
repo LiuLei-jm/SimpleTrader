@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleTrader.Domain.Models;
@@ -6,6 +7,7 @@ using SimpleTrader.Domain.Services;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.EntityFramework;
 using SimpleTrader.EntityFramework.Services;
+using SimpleTrader.FinancialModelingPrepAPI;
 using SimpleTrader.FinancialModelingPrepAPI.Services;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
@@ -32,6 +34,11 @@ namespace SimpleTrader.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
+            string apiKey = ConfigurationManager.AppSettings.Get("financeApiKey");
+            services.AddSingleton<FinancialModelingPrepHttpClientFactory>(
+                s => new FinancialModelingPrepHttpClientFactory(apiKey)
+            );
+
             services.AddSingleton<SimpleTraderDbContextFactory>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
             services.AddSingleton<IStockPriceService, StockPriceService>();
@@ -39,8 +46,8 @@ namespace SimpleTrader.WPF
             services.AddSingleton<IStockIndexService, StockIndexService>();
 
             services.AddSingleton<
-                ISimpleTraderViewModelAbstractFactory,
-                SimpleTraderViewModelAbstractFactory
+                IRootSimpleTraderViewModelFactory,
+                RootSimpleTraderViewModelFactory
             >();
             services.AddSingleton<
                 ISimpleTraderViewModelFactory<HomeViewModel>,
@@ -57,8 +64,11 @@ namespace SimpleTrader.WPF
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();
+            services.AddScoped<BuyViewModel>();
 
-            services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
+            services.AddScoped<MainWindow>(s => new MainWindow(
+                s.GetRequiredService<MainViewModel>()
+            ));
 
             return services.BuildServiceProvider();
         }
