@@ -26,6 +26,10 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
         public async Task<Account> Login(string username, string password)
         {
             Account storedAccount = await _accountDataService.GetByUsername(username);
+            if (storedAccount is null)
+            {
+                throw new UserNotFoundException(username);
+            }
             var passwordResult = _passwordHasher.VerifyHashedPassword(
                 storedAccount.AccountHolder.PasswordHash,
                 password
@@ -46,7 +50,7 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
         {
             RegistrationResult result = RegistrationResult.Success;
 
-            if (password == confirmPassword)
+            if (password != confirmPassword)
             {
                 result = RegistrationResult.PasswordsDoNotMatch;
             }
