@@ -10,7 +10,7 @@ using SimpleTrader.EntityFramework.Services.Common;
 
 namespace SimpleTrader.EntityFramework.Services
 {
-    public class AccountDataService : IDataService<Account>
+    public class AccountDataService : IAccountService
     {
         private readonly SimpleTraderDbContextFactory _contextFactory;
         private readonly NonQueryDataService<Account> _nonQueryDataService;
@@ -50,6 +50,30 @@ namespace SimpleTrader.EntityFramework.Services
                     .Accounts.Include(a => a.AssetTransactions)
                     .ToListAsync();
                 return entities.AsEnumerable();
+            }
+        }
+
+        public async Task<Account> GetByEmail(string email)
+        {
+            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
+            {
+                var existingEntity = await context
+                    .Accounts.Include(a => a.AccountHolder)
+                    .Include(a => a.AssetTransactions)
+                    .FirstOrDefaultAsync(e => e.AccountHolder.Email == email);
+                return existingEntity;
+            }
+        }
+
+        public async Task<Account> GetByUsername(string username)
+        {
+            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
+            {
+                var existingEntity = await context
+                    .Accounts.Include(a => a.AccountHolder)
+                    .Include(a => a.AssetTransactions)
+                    .FirstOrDefaultAsync(e => e.AccountHolder.Username == username);
+                return existingEntity;
             }
         }
 
