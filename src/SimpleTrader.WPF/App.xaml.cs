@@ -37,7 +37,7 @@ namespace SimpleTrader.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
-            string apiKey = ConfigurationManager.AppSettings.Get("financeApiKey");
+            string apiKey = ConfigurationManager.AppSettings.Get("financeApiKey")!;
             services.AddSingleton<FinancialModelingPrepHttpClientFactory>(
                 s => new FinancialModelingPrepHttpClientFactory(apiKey)
             );
@@ -52,34 +52,42 @@ namespace SimpleTrader.WPF
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
-            services.AddSingleton<
-                IRootSimpleTraderViewModelFactory,
-                RootSimpleTraderViewModelFactory
-            >();
-            services.AddSingleton<
-                ISimpleTraderViewModelFactory<HomeViewModel>,
-                HomeViewModelFactory
-            >();
-            services.AddSingleton<
-                ISimpleTraderViewModelFactory<PortfolioViewModel>,
-                PortfolioViewModelFactory
-            >();
-            services.AddSingleton<
-                ISimpleTraderViewModelFactory<StockIndexListingViewModel>,
-                StockIndexListingViewModelFactory
-            >();
-            services.AddSingleton<ISimpleTraderViewModelFactory<LoginViewModel>>(
-                (services) =>
-                    new LoginViewModelFactory(
+            services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
+            services.AddSingleton<BuyViewModel>();
+            services.AddSingleton<PortfolioViewModel>();
+            services.AddSingleton<HomeViewModel>(services => new HomeViewModel(
+                StockIndexListingViewModel.LoadMajorIndexViewModel(
+                    services.GetRequiredService<IStockIndexService>()
+                )
+            ));
+            services.AddSingleton<LoginViewModel>();
+
+            services.AddSingleton<CreateViewModel<HomeViewModel>>(services =>
+            {
+                return () => services.GetRequiredService<HomeViewModel>();
+            });
+
+            services.AddSingleton<CreateViewModel<BuyViewModel>>(services =>
+            {
+                return () => services.GetRequiredService<BuyViewModel>();
+            });
+
+            services.AddSingleton<CreateViewModel<PortfolioViewModel>>(services =>
+            {
+                return () => services.GetRequiredService<PortfolioViewModel>();
+            });
+
+            services.AddSingleton<CreateViewModel<LoginViewModel>>(services =>
+            {
+                return () =>
+                    new LoginViewModel(
                         services.GetRequiredService<IAuthenticator>(),
-                        new ViewModelFactoryRenavigator<HomeViewModel>(
+                        new ViewModelDelegateRenavigator<HomeViewModel>(
                             services.GetRequiredService<INavigator>(),
-                            services.GetRequiredService<
-                                ISimpleTraderViewModelFactory<HomeViewModel>
-                            >()
+                            services.GetRequiredService<CreateViewModel<HomeViewModel>>()
                         )
-                    )
-            );
+                    );
+            });
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<IAuthenticator, Authenticator>();

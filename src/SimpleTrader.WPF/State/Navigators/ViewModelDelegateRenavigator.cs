@@ -8,24 +8,24 @@ using SimpleTrader.WPF.ViewModels.Factories;
 
 namespace SimpleTrader.WPF.State.Navigators
 {
-    public class ViewModelFactoryRenavigator<TViewModel> : IRenavigator
+    public class ViewModelDelegateRenavigator<TViewModel> : IRenavigator
         where TViewModel : ViewModelBase
     {
         private readonly INavigator _navigator;
-        private readonly ISimpleTraderViewModelFactory<TViewModel> _viewModelFactory;
+        private readonly CreateViewModel<TViewModel> _createViewModel;
 
-        public ViewModelFactoryRenavigator(
+        public ViewModelDelegateRenavigator(
             INavigator navigator,
-            ISimpleTraderViewModelFactory<TViewModel> viewModelFactory
+            CreateViewModel<TViewModel> createViewModel
         )
         {
+            _createViewModel = createViewModel;
             _navigator = navigator;
-            _viewModelFactory = viewModelFactory;
         }
 
         public void Renavigate()
         {
-            _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel();
+            _navigator.CurrentViewModel = _createViewModel();
         }
     }
 }
