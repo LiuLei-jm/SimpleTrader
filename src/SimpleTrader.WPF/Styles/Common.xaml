@@ -29,6 +29,25 @@
         </Setter>
     </Style>
 
+    <!--Password Boxes-->
+    <Style TargetType="PasswordBox">
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border BorderThickness="1"
+                            BorderBrush="Gray"
+                            CornerRadius="3">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--Buttons-->
     <Style TargetType="Button">
         <Setter Property="Background"

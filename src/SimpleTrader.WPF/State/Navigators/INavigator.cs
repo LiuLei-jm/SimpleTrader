@@ -1,5 +1,5 @@
-﻿using SimpleTrader.WPF.ViewModels;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using SimpleTrader.WPF.ViewModels;
 
 namespace SimpleTrader.WPF.State.Navigators
 {
@@ -7,8 +7,10 @@ namespace SimpleTrader.WPF.State.Navigators
     {
         Home,
         Portfolio,
-        Buy
+        Buy,
+        Login,
     }
+
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
