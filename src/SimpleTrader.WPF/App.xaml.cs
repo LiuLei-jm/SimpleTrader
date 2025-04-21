@@ -68,10 +68,18 @@ namespace SimpleTrader.WPF
                 ISimpleTraderViewModelFactory<StockIndexListingViewModel>,
                 StockIndexListingViewModelFactory
             >();
-            services.AddSingleton<
-                ISimpleTraderViewModelFactory<LoginViewModel>,
-                LoginViewModelFactory
-            >();
+            services.AddSingleton<ISimpleTraderViewModelFactory<LoginViewModel>>(
+                (services) =>
+                    new LoginViewModelFactory(
+                        services.GetRequiredService<IAuthenticator>(),
+                        new ViewModelFactoryRenavigator<HomeViewModel>(
+                            services.GetRequiredService<INavigator>(),
+                            services.GetRequiredService<
+                                ISimpleTraderViewModelFactory<HomeViewModel>
+                            >()
+                        )
+                    )
+            );
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<IAuthenticator, Authenticator>();

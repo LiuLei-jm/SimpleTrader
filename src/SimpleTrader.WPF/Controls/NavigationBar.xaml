@@ -41,19 +41,19 @@
 
             <RadioButton Grid.Column="0"
                          Content="Home"
-                         IsChecked="{Binding CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter},ConverterParameter={x:Type vm:HomeViewModel}}"
+                         IsChecked="{Binding Navigator.CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter},ConverterParameter={x:Type vm:HomeViewModel}}"
                          Command="{Binding UpdateCurrentViewModelCommand}"
                          CommandParameter="{x:Static nav:ViewType.Home}" />
             <RadioButton Content="Portfolio"
                          Grid.Column="1"
-                         IsChecked="{Binding CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter},ConverterParameter={x:Type vm:PortfolioViewModel}}"
+                         IsChecked="{Binding Navigator.CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter},ConverterParameter={x:Type vm:PortfolioViewModel}}"
                          Command="{Binding UpdateCurrentViewModelCommand}"
                          CommandParameter="{x:Static nav:ViewType.Portfolio}" />
             <RadioButton Grid.Column="2"
-                         Content="Buy" 
-                         IsChecked="{Binding CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:BuyViewModel}}"
+                         Content="Buy"
+                         IsChecked="{Binding Navigator.CurrentViewModel,Mode=OneWay,Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:BuyViewModel}}"
                          Command="{Binding UpdateCurrentViewModelCommand}"
-                         CommandParameter="{x:Static nav:ViewType.Buy}"/>
+                         CommandParameter="{x:Static nav:ViewType.Buy}" />
             <RadioButton Grid.Column="3"
                          Content="Sell" />
         </Grid>

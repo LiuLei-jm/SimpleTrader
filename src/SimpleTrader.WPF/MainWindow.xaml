@@ -19,14 +19,14 @@
                 <Style TargetType="Grid">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Authenticator.IsLoggedIn}"
-                                    Value="False">
+                                     Value="False">
                             <Setter Property="Visibility"
                                     Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <controls:NavigationBar DataContext="{Binding Navigator}" />
+            <controls:NavigationBar />
         </Grid>
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto"
