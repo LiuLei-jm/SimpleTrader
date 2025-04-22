@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using SimpleTrader.Domain.Models;
+﻿using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
 
 namespace SimpleTrader.FinancialModelingPrepAPI.Services

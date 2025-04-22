@@ -1,8 +1,4 @@
-﻿using System.Windows.Input;
-using SimpleTrader.WPF.Commands;
-using SimpleTrader.WPF.Models;
-using SimpleTrader.WPF.ViewModels;
-using SimpleTrader.WPF.ViewModels.Factories;
+﻿using SimpleTrader.WPF.ViewModels;
 
 namespace SimpleTrader.WPF.State.Navigators
 {

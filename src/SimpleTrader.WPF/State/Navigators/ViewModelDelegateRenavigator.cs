@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SimpleTrader.WPF.ViewModels;
-using SimpleTrader.WPF.ViewModels.Factories;
+﻿using SimpleTrader.WPF.ViewModels;
 
 namespace SimpleTrader.WPF.State.Navigators
 {

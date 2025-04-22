@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SimpleTrader.Domain.Models;
+﻿using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services.AuthenticationServices;
-using SimpleTrader.WPF.Models;
 using SimpleTrader.WPF.State.Accounts;
 
 namespace SimpleTrader.WPF.State.Authenticators
 {
-    public class Authenticator :  IAuthenticator
+    public class Authenticator : IAuthenticator
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IAccountStore _accountStore;

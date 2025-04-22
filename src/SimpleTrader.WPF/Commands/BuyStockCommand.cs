@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services.TransactionServices;
@@ -19,7 +14,11 @@ namespace SimpleTrader.WPF.Commands
         private readonly IBuyStockService _buyStockService;
         private readonly IAccountStore _accountStore;
 
-        public BuyStockCommand(BuyViewModel buyViewModel, IBuyStockService buyStockService,IAccountStore accountStore)
+        public BuyStockCommand(
+            BuyViewModel buyViewModel,
+            IBuyStockService buyStockService,
+            IAccountStore accountStore
+        )
         {
             _buyViewModel = buyViewModel;
             _buyStockService = buyStockService;
@@ -41,6 +40,7 @@ namespace SimpleTrader.WPF.Commands
                     _buyViewModel.SharesToBuy
                 );
                 _accountStore.CurrentAccount = account;
+                MessageBox.Show("Success");
             }
             catch (Exception ex)
             {

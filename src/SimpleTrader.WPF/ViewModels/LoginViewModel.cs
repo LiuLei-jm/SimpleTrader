@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using SimpleTrader.WPF.Commands;
+﻿using SimpleTrader.WPF.Commands;
 using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigators;
+using System.Windows.Input;
 
 namespace SimpleTrader.WPF.ViewModels
 {
