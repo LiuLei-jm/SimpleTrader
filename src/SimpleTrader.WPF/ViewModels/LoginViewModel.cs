@@ -18,17 +18,33 @@ namespace SimpleTrader.WPF.ViewModels
                 OnPropertyChanged(nameof(Username));
             }
         }
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
         public ICommand LoginCommand { get; }
+        public ICommand ViewRegisterCommand { get; }
         public MessageViewModel ErrorMessageViewModel { get; }
         public string ErrorMessage
         {
             set => ErrorMessageViewModel.Message = value;
         }
 
-        public LoginViewModel(IAuthenticator authenticator, IRenavigator renavigator)
+        public LoginViewModel(
+            IAuthenticator authenticator,
+            IRenavigator loginRenavigator,
+            IRenavigator registerRenavigator
+        )
         {
             ErrorMessageViewModel = new MessageViewModel();
-            LoginCommand = new LoginCommand(this, authenticator, renavigator);
+            LoginCommand = new LoginCommand(this, authenticator, loginRenavigator);
+            ViewRegisterCommand = new RenavigateCommand(registerRenavigator);
         }
     }
 }

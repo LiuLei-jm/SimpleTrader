@@ -110,17 +110,34 @@ namespace SimpleTrader.WPF
                             return () => services.GetRequiredService<PortfolioViewModel>();
                         });
 
+                        services.AddSingleton<ViewModelDelegateRenavigator<LoginViewModel>>();
+                        services.AddSingleton<CreateViewModel<RegisterViewModel>>(services =>
+                        {
+                            return () =>
+                                new RegisterViewModel(
+                                    services.GetRequiredService<IAuthenticator>(),
+                                    services.GetRequiredService<
+                                        ViewModelDelegateRenavigator<RegisterViewModel>
+                                    >(),
+                                    services.GetRequiredService<
+                                        ViewModelDelegateRenavigator<LoginViewModel>
+                                    >()
+                                );
+                        });
+
+                        services.AddSingleton<ViewModelDelegateRenavigator<HomeViewModel>>();
+                        services.AddSingleton<ViewModelDelegateRenavigator<RegisterViewModel>>();
                         services.AddSingleton<CreateViewModel<LoginViewModel>>(services =>
                         {
                             return () =>
                                 new LoginViewModel(
                                     services.GetRequiredService<IAuthenticator>(),
-                                    new ViewModelDelegateRenavigator<HomeViewModel>(
-                                        services.GetRequiredService<INavigator>(),
-                                        services.GetRequiredService<
-                                            CreateViewModel<HomeViewModel>
-                                        >()
-                                    )
+                                    services.GetRequiredService<
+                                        ViewModelDelegateRenavigator<HomeViewModel>
+                                    >(),
+                                    services.GetRequiredService<
+                                        ViewModelDelegateRenavigator<RegisterViewModel>
+                                    >()
                                 );
                         });
 
@@ -129,7 +146,6 @@ namespace SimpleTrader.WPF
                         services.AddSingleton<IAccountStore, AccountStore>();
                         services.AddSingleton<AssetStore>();
                         services.AddScoped<MainViewModel>();
-                        services.AddScoped<BuyViewModel>();
 
                         services.AddScoped<MainWindow>(s => new MainWindow(
                             s.GetRequiredService<MainViewModel>()
