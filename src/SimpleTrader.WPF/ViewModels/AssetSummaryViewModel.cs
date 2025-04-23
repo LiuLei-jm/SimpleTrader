@@ -1,5 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using SimpleTrader.WPF.State.Assets;
+﻿using SimpleTrader.WPF.State.Assets;
+using System.Collections.ObjectModel;
 
 namespace SimpleTrader.WPF.ViewModels
 {

@@ -1,12 +1,11 @@
-﻿using SimpleTrader.WPF.State.Navigators;
+﻿using System.Windows.Input;
+using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels.Factories;
-using System.Windows.Input;
 
 namespace SimpleTrader.WPF.Commands
 {
-    public class UpdateCurrentViewModelCommand : ICommand
+    public class UpdateCurrentViewModelCommand : AsyncCommandBase
     {
-        public event EventHandler? CanExecuteChanged;
         private INavigator _navigator;
         private readonly ISimpleTraderViewModelFactory _viewModelFactory;
 
@@ -19,18 +18,14 @@ namespace SimpleTrader.WPF.Commands
             _viewModelFactory = viewModelFactory;
         }
 
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             if (parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
 
                 _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
+                Task.CompletedTask.Wait();
             }
             else
             {

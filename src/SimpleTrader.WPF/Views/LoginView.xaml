@@ -13,6 +13,9 @@
                     Opacity="0.5"
                     Stretch="UniformToFill" />
     </UserControl.Background>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Border HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Background="White"
@@ -45,6 +48,7 @@
             <Grid Grid.Row="2"
                   Margin="0 20">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -83,6 +87,14 @@
                         Margin="0 10"
                         HorizontalAlignment="Center"
                         Click="Login_Click" />
+
+                <TextBlock Grid.Row="3"
+                           Margin="0 10 0 0"
+                           DataContext="{Binding ErrorMessageViewModel}"
+                           HorizontalAlignment="Center"
+                           Text="{Binding Message}"
+                           Foreground="DarkRed"
+                           Visibility="{Binding HasMessage,Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
         </Grid>
     </Border>

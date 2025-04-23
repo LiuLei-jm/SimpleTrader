@@ -1,11 +1,12 @@
-﻿using SimpleTrader.WPF.State.Authenticators;
+﻿using System.Windows.Input;
+using SimpleTrader.Domain.Exceptions;
+using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
-using System.Windows.Input;
 
 namespace SimpleTrader.WPF.Commands
 {
-    public class LoginCommand : ICommand
+    public class LoginCommand : AsyncCommandBase
     {
         private readonly IAuthenticator _authenticator;
         private readonly IRenavigator _renavigator;
@@ -14,7 +15,7 @@ namespace SimpleTrader.WPF.Commands
         public LoginCommand(
             LoginViewModel loginViewModel,
             IAuthenticator authenticator,
-           IRenavigator renavigator
+            IRenavigator renavigator
         )
         {
             _authenticator = authenticator;
@@ -22,22 +23,24 @@ namespace SimpleTrader.WPF.Commands
             _loginViewModel = loginViewModel;
         }
 
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            return true;
-        }
-
-        public async void Execute(object parameter)
-        {
-            bool result = await _authenticator.Login(
-                _loginViewModel.Username,
-                parameter.ToString()
-            );
-            if (result)
+            try
             {
+                await _authenticator.Login(_loginViewModel.Username, parameter.ToString());
                 _renavigator.Renavigate();
+            }
+            catch (UserNotFoundException)
+            {
+                _loginViewModel.ErrorMessage = "User not found. Please check your username.";
+            }
+            catch (InvalidPasswordException)
+            {
+                _loginViewModel.ErrorMessage = "Invalid password. Please try again.";
+            }
+            catch (Exception)
+            {
+                _loginViewModel.ErrorMessage = "Login failed.";
             }
         }
     }

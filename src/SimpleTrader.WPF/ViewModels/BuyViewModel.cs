@@ -1,8 +1,8 @@
-﻿using SimpleTrader.Domain.Services;
+﻿using System.Windows.Input;
+using SimpleTrader.Domain.Services;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.WPF.Commands;
 using SimpleTrader.WPF.State.Accounts;
-using System.Windows.Input;
 
 namespace SimpleTrader.WPF.ViewModels
 {
@@ -67,11 +67,28 @@ namespace SimpleTrader.WPF.ViewModels
         {
             get { return StockPrice * SharesToBuy; }
         }
+
+        public MessageViewModel ErrorMessageViewModel { get; }
+        public string ErrorMessage
+        {
+            set => ErrorMessageViewModel.Message = value;
+        }
+        public MessageViewModel StatusMessageViewModel { get; }
+        public string StatusMessage
+        {
+            set => StatusMessageViewModel.Message = value;
+        }
         public ICommand SearchSymbolCommand { get; set; }
         public ICommand BuyStockCommand { get; set; }
 
-        public BuyViewModel(IStockPriceService stockPriceService, IBuyStockService buyStockService, IAccountStore accountStore)
+        public BuyViewModel(
+            IStockPriceService stockPriceService,
+            IBuyStockService buyStockService,
+            IAccountStore accountStore
+        )
         {
+            ErrorMessageViewModel = new MessageViewModel();
+            StatusMessageViewModel = new MessageViewModel();
             SearchSymbolCommand = new SearchSymbolCommand(this, stockPriceService);
             BuyStockCommand = new BuyStockCommand(this, buyStockService, accountStore);
         }

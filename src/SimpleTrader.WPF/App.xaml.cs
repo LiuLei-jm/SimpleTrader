@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Windows;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
@@ -16,6 +14,8 @@ using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
 using SimpleTrader.WPF.ViewModels.Factories;
+using System.Configuration;
+using System.Windows;
 
 namespace SimpleTrader.WPF
 {
