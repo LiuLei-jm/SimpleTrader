@@ -3,15 +3,20 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace SimpleTrader.EntityFramework;
 
-public class SimpleTraderDbContextFactory : IDesignTimeDbContextFactory<SimpleTraderDbContext>
+public class SimpleTraderDbContextFactory
 {
-    public SimpleTraderDbContext CreateDbContext(string[] args = null)
+    private readonly string _connenctionString;
+
+    public SimpleTraderDbContextFactory(string connenctionString)
+    {
+        _connenctionString = connenctionString;
+    }
+
+    public SimpleTraderDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<SimpleTraderDbContext>();
 
-        options.UseSqlServer(
-            "Server=(localdb)\\MSSQLLocalDB;Database=SimpleTrader;Trusted_Connection=True"
-        );
+        options.UseSqlServer(_connenctionString);
         return new SimpleTraderDbContext(options.Options);
     }
 }
