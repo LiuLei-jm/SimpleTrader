@@ -1,4 +1,15 @@
-﻿namespace SimpleTrader.WPF.ViewModels
+﻿using System.Collections.ObjectModel;
+using SimpleTrader.WPF.State.Assets;
+
+namespace SimpleTrader.WPF.ViewModels
 {
-    public class PortfolioViewModel : ViewModelBase { }
+    public class PortfolioViewModel : ViewModelBase
+    {
+        public AssetListingViewModel AssetListingViewModel { get; }
+
+        public PortfolioViewModel(AssetStore assetStore)
+        {
+            AssetListingViewModel = new AssetListingViewModel(assetStore);
+        }
+    }
 }
