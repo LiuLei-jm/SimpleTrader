@@ -57,7 +57,7 @@ namespace SimpleTrader.WPF
                             s => new FinancialModelingPrepHttpClientFactory(apiKey)
                         );
                         string? connectionString = context.Configuration.GetConnectionString(
-                            "default"
+                            "sqlite"
                         );
                         if (string.IsNullOrEmpty(connectionString))
                         {
@@ -65,12 +65,11 @@ namespace SimpleTrader.WPF
                                 "The connection string is not set in the app settings."
                             );
                         }
-
-                        services.AddDbContext<SimpleTraderDbContext>(options =>
-                            options.UseSqlServer(connectionString)
-                        );
+                        Action<DbContextOptionsBuilder> configureDbContext = o =>
+                            o.UseSqlite(connectionString);
+                        services.AddDbContext<SimpleTraderDbContext>(configureDbContext);
                         services.AddSingleton<SimpleTraderDbContextFactory>(
-                            new SimpleTraderDbContextFactory(connectionString)
+                            new SimpleTraderDbContextFactory(configureDbContext)
                         );
                         services.AddSingleton<IAuthenticationService, AuthenticationService>();
                         services.AddSingleton<IDataService<Account>, AccountDataService>();
@@ -158,6 +157,14 @@ namespace SimpleTrader.WPF
         protected override async void OnStartup(StartupEventArgs e)
         {
             _host.Start();
+
+            SimpleTraderDbContextFactory contextFactory =
+                _host.Services.GetRequiredService<SimpleTraderDbContextFactory>();
+            using (SimpleTraderDbContext context = contextFactory.CreateDbContext())
+            {
+                context.Database.Migrate();
+            }
+
             Window window = _host.Services.GetRequiredService<MainWindow>();
             window.Show();
 

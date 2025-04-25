@@ -5,18 +5,17 @@ namespace SimpleTrader.EntityFramework;
 
 public class SimpleTraderDbContextFactory
 {
-    private readonly string _connenctionString;
+    private readonly Action<DbContextOptionsBuilder> _configureDbContext;
 
-    public SimpleTraderDbContextFactory(string connenctionString)
+    public SimpleTraderDbContextFactory(Action<DbContextOptionsBuilder> configureDbContext)
     {
-        _connenctionString = connenctionString;
+        this._configureDbContext = configureDbContext;
     }
 
     public SimpleTraderDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<SimpleTraderDbContext>();
-
-        options.UseSqlServer(_connenctionString);
+        _configureDbContext(options);
         return new SimpleTraderDbContext(options.Options);
     }
 }
