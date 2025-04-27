@@ -8,32 +8,35 @@ namespace SimpleTrader.WPF.Commands
 {
     public class SearchSymbolCommand : AsyncCommandBase
     {
-        private readonly BuyViewModel _buyViewModel;
+        private readonly ISearchSymbolViewModel _viewModel;
         private IStockPriceService _stockPriceService;
 
-        public SearchSymbolCommand(BuyViewModel buyViewModel, IStockPriceService stockPriceService)
+        public SearchSymbolCommand(
+            ISearchSymbolViewModel viewModel,
+            IStockPriceService stockPriceService
+        )
         {
-            _buyViewModel = buyViewModel;
+            _viewModel = viewModel;
             _stockPriceService = stockPriceService;
         }
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            _buyViewModel.ErrorMessage = string.Empty;
-            _buyViewModel.StatusMessage = string.Empty;
+            _viewModel.ErrorMessage = string.Empty;
+            _viewModel.StatusMessage = string.Empty;
             try
             {
-                double stockPrice = await _stockPriceService.GetPrice(_buyViewModel.Symbol);
-                _buyViewModel.SearchResultSymbol = _buyViewModel.Symbol.ToUpper();
-                _buyViewModel.StockPrice = stockPrice;
+                double stockPrice = await _stockPriceService.GetPrice(_viewModel.Symbol);
+                _viewModel.SearchResultSymbol = _viewModel.Symbol.ToUpper();
+                _viewModel.StockPrice = stockPrice;
             }
             catch (InvalidSymbolException)
             {
-                _buyViewModel.ErrorMessage = "Invalid symbol.";
+                _viewModel.ErrorMessage = "Invalid symbol.";
             }
             catch (Exception)
             {
-                _buyViewModel.ErrorMessage = "Search symbol failed.";
+                _viewModel.ErrorMessage = "Search symbol failed.";
             }
         }
     }

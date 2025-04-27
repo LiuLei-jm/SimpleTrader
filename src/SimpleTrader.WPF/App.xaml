@@ -1,9 +1,10 @@
-﻿<Application x:Class="SimpleTrader.WPF.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SimpleTrader.WPF"
-             xmlns:viewmodels="clr-namespace:SimpleTrader.WPF.ViewModels"
-             xmlns:views="clr-namespace:SimpleTrader.WPF.Views">
+﻿<Application
+    x:Class="SimpleTrader.WPF.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:SimpleTrader.WPF"
+    xmlns:viewmodels="clr-namespace:SimpleTrader.WPF.ViewModels"
+    xmlns:views="clr-namespace:SimpleTrader.WPF.Views">
     <Application.Resources>
 
         <ResourceDictionary>
@@ -20,6 +21,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:BuyViewModel}">
                 <views:BuyView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:SellViewModel}">
+                <views:SellView SelectedAssetChangedCommand="{Binding SearchSymbolCommand}"/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
                 <views:LoginView />

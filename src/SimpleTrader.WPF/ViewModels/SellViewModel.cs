@@ -1,26 +1,37 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using SimpleTrader.Domain.Services;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.WPF.Commands;
 using SimpleTrader.WPF.State.Accounts;
+using SimpleTrader.WPF.State.Assets;
 
 namespace SimpleTrader.WPF.ViewModels
 {
-    public class BuyViewModel : ViewModelBase, ISearchSymbolViewModel
+    public class SellViewModel : ViewModelBase, ISearchSymbolViewModel
     {
-        private string _symbol;
-        public string Symbol
+        public AssetListingViewModel AssetListingViewModel { get; }
+        private readonly IStockPriceService stockPriceService;
+        private AssetViewModel _selectedAsset;
+        public AssetViewModel SelectedAsset
         {
-            get { return _symbol; }
+            get => _selectedAsset;
             set
             {
-                if (_symbol != value)
-                {
-                    _symbol = value;
-                    OnPropertyChanged(nameof(Symbol));
-                }
+                _selectedAsset = value;
+                OnPropertyChanged(nameof(SelectedAsset));
+                OnPropertyChanged(nameof(Symbol));
+                OnPropertyChanged(nameof(CanSearchSymbol));
             }
         }
+
+        private string _symbol;
+        public string Symbol => SelectedAsset?.Symbol ?? string.Empty;
+        public bool CanSearchSymbol => !string.IsNullOrEmpty(Symbol);
         private string _searchResultSymbol = string.Empty;
         public string SearchResultSymbol
         {
@@ -35,6 +46,7 @@ namespace SimpleTrader.WPF.ViewModels
             }
         }
         private double _stockPrice;
+
         public double StockPrice
         {
             get { return _stockPrice; }
@@ -48,26 +60,24 @@ namespace SimpleTrader.WPF.ViewModels
                 }
             }
         }
-        private int _sharesToBuy;
-        public int SharesToBuy
+        private int _sharesToSell;
+        public int SharesToSell
         {
-            get { return _sharesToBuy; }
+            get { return _sharesToSell; }
             set
             {
-                if (_sharesToBuy != value)
+                if (_sharesToSell != value)
                 {
-                    _sharesToBuy = value;
-                    OnPropertyChanged(nameof(SharesToBuy));
+                    _sharesToSell = value;
+                    OnPropertyChanged(nameof(SharesToSell));
                     OnPropertyChanged(nameof(TotalPrice));
+                    OnPropertyChanged(nameof(CanSellStock));
                 }
             }
         }
 
-        public double TotalPrice
-        {
-            get { return StockPrice * SharesToBuy; }
-        }
-
+        public bool CanSellStock => SharesToSell > 0;
+        public double TotalPrice => SharesToSell * StockPrice;
         public MessageViewModel ErrorMessageViewModel { get; }
         public string ErrorMessage
         {
@@ -78,19 +88,21 @@ namespace SimpleTrader.WPF.ViewModels
         {
             set => StatusMessageViewModel.Message = value;
         }
-        public ICommand SearchSymbolCommand { get; set; }
-        public ICommand BuyStockCommand { get; set; }
+        public ICommand SearchSymbolCommand { get; }
+        public ICommand SellStockCommand { get; }
 
-        public BuyViewModel(
+        public SellViewModel(
+            AssetStore assetStore,
             IStockPriceService stockPriceService,
-            IBuyStockService buyStockService,
-            IAccountStore accountStore
+            IAccountStore accountStore,
+            ISellStockService sellStockService
         )
         {
             ErrorMessageViewModel = new MessageViewModel();
             StatusMessageViewModel = new MessageViewModel();
+            AssetListingViewModel = new AssetListingViewModel(assetStore);
             SearchSymbolCommand = new SearchSymbolCommand(this, stockPriceService);
-            BuyStockCommand = new BuyStockCommand(this, buyStockService, accountStore);
+            SellStockCommand = new SellStockCommand(this, sellStockService, accountStore);
         }
     }
 }
