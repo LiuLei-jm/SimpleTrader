@@ -6,30 +6,26 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class StockPriceService : IStockPriceService
     {
-        private readonly FinancialModelingPrepHttpClientFactory _httpClientFactory;
+        private readonly FinancialModelingPrepHttpClient _httpClient;
 
-        public StockPriceService(FinancialModelingPrepHttpClientFactory httpClientFactory)
+        public StockPriceService(FinancialModelingPrepHttpClient httpClient)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient;
         }
 
         public async Task<double> GetPrice(string symbol)
         {
-            using (FinancialModelingPrepHttpClient client = _httpClientFactory.CreateHttpClient())
+            string url = $"aftermarket-trade/?symbol={symbol}";
+
+            var stockPriceResult = await _httpClient.GetAsync<List<StockPriceResult>>(url);
+
+            var firstResult = stockPriceResult?.FirstOrDefault();
+            if (firstResult == null)
             {
-                string url =
-                    $"aftermarket-trade/?symbol={symbol}";
-
-                var stockPriceResult = await client.GetAsync<List<StockPriceResult>>(url);
-
-                var firstResult = stockPriceResult?.FirstOrDefault();
-                if (firstResult == null)
-                {
-                    throw new InvalidSymbolException(symbol);
-                }
-
-                return firstResult.Price;
+                throw new InvalidSymbolException(symbol);
             }
+
+            return firstResult.Price;
         }
     }
 }

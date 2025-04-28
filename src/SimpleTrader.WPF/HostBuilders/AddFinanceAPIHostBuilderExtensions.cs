@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleTrader.FinancialModelingPrepAPI;
+using SimpleTrader.FinancialModelingPrepAPI.Models;
 
 namespace SimpleTrader.WPF.HostBuilders
 {
@@ -25,9 +26,11 @@ namespace SimpleTrader.WPF.HostBuilders
                             "The financeApiKey is not set in the app settings."
                         );
                     }
-                    services.AddSingleton<FinancialModelingPrepHttpClientFactory>(
-                        s => new FinancialModelingPrepHttpClientFactory(apiKey)
-                    );
+                    services.AddSingleton(new FinancialModelingPrepAPIKey(apiKey));
+                    services.AddHttpClient<FinancialModelingPrepHttpClient>(c =>
+                    {
+                        c.BaseAddress = new Uri("https://financialmodelingprep.com/stable/");
+                    });
                 }
             );
             return host;

@@ -5,24 +5,21 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class StockIndexService : IStockIndexService
     {
-        private readonly FinancialModelingPrepHttpClientFactory _httpClientFactory;
+        private readonly FinancialModelingPrepHttpClient _httpClient;
 
-        public StockIndexService(FinancialModelingPrepHttpClientFactory httpClientFactory)
+        public StockIndexService(FinancialModelingPrepHttpClient httpClient)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient;
         }
 
         public async Task<StockIndex?> GetStockIndex(string symbol)
         {
-            using (FinancialModelingPrepHttpClient client = _httpClientFactory.CreateHttpClient())
-            {
-                string uri = $"quote-short/?symbol=^{symbol}";
+            string uri = $"quote-short/?symbol=^{symbol}";
 
-                var stockIndexResult = await client.GetAsync<List<StockIndex>>(uri);
+            var stockIndexResult = await _httpClient.GetAsync<List<StockIndex>>(uri);
 
-                var shortQuote = stockIndexResult.FirstOrDefault();
-                return shortQuote;
-            }
+            var shortQuote = stockIndexResult.FirstOrDefault();
+            return shortQuote;
         }
     }
 }
