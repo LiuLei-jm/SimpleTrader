@@ -104,5 +104,13 @@ namespace SimpleTrader.WPF.ViewModels
             SearchSymbolCommand = new SearchSymbolCommand(this, stockPriceService);
             SellStockCommand = new SellStockCommand(this, sellStockService, accountStore);
         }
+
+        public override void Dispose()
+        {
+            AssetListingViewModel.Dispose();
+            ErrorMessageViewModel.Dispose();
+            StatusMessageViewModel.Dispose();
+            base.Dispose();
+        }
     }
 }

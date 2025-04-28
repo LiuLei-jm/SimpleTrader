@@ -75,7 +75,7 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
                     DatedJoined = DateTime.Now,
                 };
 
-                Account account = new Account() { AccountHolder = user };
+                Account account = new Account() { AccountHolder = user, Balance = 500 };
                 await _accountDataService.Create(account);
             }
 
