@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,21 @@ namespace SimpleTrader.WPF.Commands
             _sellViewModel = sellViewModel;
             _sellStockService = sellStockService;
             _accountStore = accountStore;
+
+            _sellViewModel.PropertyChanged += SellViewModel_PropertyChanged;
+        }
+
+        private void SellViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SellViewModel.CanSellStock))
+            {
+                OnCanExecuteChanged();
+            }
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _sellViewModel.CanSellStock && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object? parameter)

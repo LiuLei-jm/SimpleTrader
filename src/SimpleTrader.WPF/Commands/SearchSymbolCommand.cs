@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using SimpleTrader.Domain.Exceptions;
 using SimpleTrader.Domain.Services;
@@ -18,6 +19,21 @@ namespace SimpleTrader.WPF.Commands
         {
             _viewModel = viewModel;
             _stockPriceService = stockPriceService;
+
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ISearchSymbolViewModel.CanSearchSymbol))
+            {
+                OnCanExecuteChanged();
+            }
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _viewModel.CanSearchSymbol && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object? parameter)

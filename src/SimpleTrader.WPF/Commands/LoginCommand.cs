@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using SimpleTrader.Domain.Exceptions;
 using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigators;
@@ -21,6 +22,21 @@ namespace SimpleTrader.WPF.Commands
             _authenticator = authenticator;
             _renavigator = renavigator;
             _loginViewModel = loginViewModel;
+
+            _loginViewModel.PropertyChanged += loginViewModel_PropertyChanged;
+        }
+
+        private void loginViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LoginViewModel.Canlogin))
+            {
+                OnCanExecuteChanged();
+            }
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _loginViewModel.Canlogin && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object parameter)

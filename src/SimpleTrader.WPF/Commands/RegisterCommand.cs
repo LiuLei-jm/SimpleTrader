@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,21 @@ namespace SimpleTrader.WPF.Commands
             _registerViewModel = registerViewModel;
             _authenticator = authenticator;
             _registerRenavigator = registerRenavigator;
+
+            _registerViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
+        }
+
+        private void RegisterViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(RegisterViewModel.CanRegister))
+            {
+                OnCanExecuteChanged();
+            }
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _registerViewModel.CanRegister && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object? parameter)

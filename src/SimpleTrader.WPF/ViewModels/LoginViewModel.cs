@@ -16,6 +16,7 @@ namespace SimpleTrader.WPF.ViewModels
             {
                 _username = value;
                 OnPropertyChanged(nameof(Username));
+                OnPropertyChanged(nameof(Canlogin));
             }
         }
         private string _password;
@@ -26,15 +27,17 @@ namespace SimpleTrader.WPF.ViewModels
             {
                 _password = value;
                 OnPropertyChanged(nameof(Password));
+                OnPropertyChanged(nameof(Canlogin));
             }
         }
-        public ICommand LoginCommand { get; }
-        public ICommand ViewRegisterCommand { get; }
+        public bool Canlogin => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         public MessageViewModel ErrorMessageViewModel { get; }
         public string ErrorMessage
         {
             set => ErrorMessageViewModel.Message = value;
         }
+        public ICommand LoginCommand { get; }
+        public ICommand ViewRegisterCommand { get; }
 
         public LoginViewModel(
             IAuthenticator authenticator,

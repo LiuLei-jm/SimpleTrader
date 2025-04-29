@@ -1,11 +1,14 @@
-﻿namespace SimpleTrader.WPF.ViewModels
+﻿using System.ComponentModel;
+
+namespace SimpleTrader.WPF.ViewModels
 {
-    public interface ISearchSymbolViewModel
+    public interface ISearchSymbolViewModel : INotifyPropertyChanged
     {
         string ErrorMessage { set; }
         string StatusMessage { set; }
         string SearchResultSymbol { set; }
         double StockPrice { set; }
         string Symbol { get; }
+        bool CanSearchSymbol { get; }
     }
 }
