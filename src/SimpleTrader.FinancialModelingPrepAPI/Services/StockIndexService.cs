@@ -19,6 +19,7 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
             var stockIndexResult = await _httpClient.GetAsync<List<StockIndex>>(uri);
 
             var shortQuote = stockIndexResult.FirstOrDefault();
+            await Task.Delay(5000);
             return shortQuote;
         }
     }
